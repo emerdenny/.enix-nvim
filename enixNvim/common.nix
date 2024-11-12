@@ -31,6 +31,10 @@ in
       config.enixNvim.pythonPackage
       config.enixNvim.nodePackage
       rustup # Must run `rustup default stable`
+      nixd
+      alejandra
+      deadnix
+      statix
     ] ++ [ refresh ];
     home-manager.users.${config.enixNvim.username}.xdg.configFile = {
       "nvim/lua" = {
