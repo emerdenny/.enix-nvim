@@ -25,7 +25,6 @@ in {
     environment.systemPackages = with pkgs;
       [
         # Essential
-        # neovim
         ripgrep
         lazygit
         gdu
@@ -37,20 +36,29 @@ in {
         ruff
         config.enixNvim.pythonPackage
         config.enixNvim.nodePackage
-        rustup # Must run `rustup default stable`
         nixd
         alejandra
         deadnix
         statix
+        marksman
       ]
       ++ [refresh];
-    home-manager.users.${config.enixNvim.username}.xdg.configFile = {
-      "nvim/lua" = {
-        source = ../src/lua;
-        recursive = true;
+    home-manager.users.${config.enixNvim.username} = {
+      programs.neovim = {
+        enable = true;
+        plugins = [
+          pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+          pkgs.vimPlugins.conjure
+        ];
       };
-      "nvim/init.lua" = {
-        source = ../src/init.lua;
+      xdg.configFile = {
+        "nvim/lua" = {
+          source = ../src/lua;
+          recursive = true;
+        };
+        "nvim/init.lua" = {
+          source = ../src/init.lua;
+        };
       };
     };
   };

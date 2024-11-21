@@ -8,6 +8,8 @@ return {
       -- add more things to the ensure_installed table protecting against community packs modifying it
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
         -- add more arguments for adding more language servers
+        "lua-language-server",
+        "marksman"
       })
     end,
   },
@@ -19,6 +21,9 @@ return {
       -- add more things to the ensure_installed table protecting against community packs modifying it
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
         -- add more arguments for adding more null-ls sources
+        "stylua",
+        "selene",
+        "ruff",
       })
     end,
   },
