@@ -5,6 +5,7 @@
 }: {
   # Import all your configuration modules here
   imports = [
+    ./buffers.nix
     ./find.nix
     ./git.nix
     ./ui.nix
@@ -49,18 +50,66 @@
       options.desc = "Get docs under cursor";
     }
     {
+      mode = "n";
+      key = "H";
+      action = "<cmd>BufferLineCyclePrev<cr>";
+      options.desc = "Switch to prev buffer";
+    }
+    {
+      mode = "n";
+      key = "L";
+      action = "<cmd>BufferLineCycleNext<cr>";
+      options.desc = "Switch to left buffer";
+    }
+    {
+      mode = "n";
+      key = "x";
+      action = "<cmd>q<cr>";
+      options.desc = "Close current buffer";
+    }
+    {
+      mode = "n";
+      key = "|";
+      action = "<cmd>vsp<cr>";
+      options.desc = "New vertical split";
+    }
+    {
+      mode = "n";
+      key = "_";
+      action = "<cmd>sp<cr>";
+      options.desc = "New horizontal split";
+    }
+    {
       mode = ["n" "i"];
       action = "<cmd>Telescope registers<CR>";
       key = "<c-p>";
       options.desc = "Paste from register";
     }
-    # ------------- Leader --------------
     {
       mode = "n";
-      key = "<leader>c";
-      action = "<cmd>q<cr><esc>";
-      options.desc = "Close buffer";
+      action = "<c-w>h";
+      key = "<c-h>";
+      options.desc = "left window";
     }
+    {
+      mode = "n";
+      action = "<c-w>j";
+      key = "<c-j>";
+      options.desc = "down window";
+    }
+    {
+      mode = "n";
+      action = "<c-w>k";
+      key = "<c-k>";
+      options.desc = "up window";
+    }
+    {
+      mode = "n";
+      action = "<c-w>l";
+      key = "<c-l>";
+      options.desc = "right window";
+    }
+    # ------------- Leader --------------
     {
       mode = "n";
       key = "<leader>n";

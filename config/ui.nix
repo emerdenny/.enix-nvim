@@ -24,13 +24,14 @@
   plugins = {
     oil.enable = true;
     lualine.enable = true;
-    bufferline.enable = true;
-    web-devicons.enable = true;
     render-markdown.enable = true;
     which-key = {
       enable = true;
       settings = {
         preset = "helix";
+        icons = {
+          group = "";
+        };
         spec = [
           {
             __unkeyed-1 = "<leader>b";
