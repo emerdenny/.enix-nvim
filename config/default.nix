@@ -8,6 +8,7 @@
     ./buffers.nix
     ./find.nix
     ./git.nix
+    ./session.nix
     ./ui.nix
   ];
 

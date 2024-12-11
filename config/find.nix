@@ -112,6 +112,13 @@
       key = "<leader>fo";
       options.desc = "Find oldfiles";
     }
+    # TODO test
+    {
+      mode = "n";
+      action = "<cmd>SessionSearch<CR>";
+      key = "<leader>fs";
+      options.desc = "Find sessions";
+    }
     # TODO not working
     # {
     #   mode = "n";
