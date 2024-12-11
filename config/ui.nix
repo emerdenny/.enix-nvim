@@ -82,4 +82,53 @@
       };
     };
   };
+
+  # https://github.com/AstroNvim/AstroNvim/blob/4697961743f500bfa2a8ccd9aef5863219a8bb8d/lua/astronvim/plugins/_astrolsp_mappings.lua
+  # https://github.com/AstroNvim/astrolsp/blob/main/lua/astrolsp/toggles.lua
+  keymaps = [
+    # TODO test
+    {
+      mode = "n";
+      key = "<leader>uf";
+      action = ''
+        function()
+          local function bool2str(bool) return bool and "on" or "off" end
+          local old_val = vim.b[0].autoformat
+          if old_val == nil then
+            vim.notify("No LSP attached with autoformatting")
+            return
+          end
+          vim.b[0].autoformat = not old_val
+          vim.notify(("Buffer autoformatting %s"):format(bool2str(vim.b[0].autoformat)))
+        end
+      '';
+      options.desc = "Toggle autoformatting (buffer)";
+    }
+    # TODO test
+    {
+      mode = "n";
+      key = "<leader>uf";
+      action = ''
+        function()
+          local function bool2str(bool) return bool and "on" or "off" end
+          local old_val = vim.b[0].autoformat
+          if old_val == nil then
+            vim.notify("No LSP attached with autoformatting")
+            return
+          end
+          vim.b[0].autoformat = not old_val
+          vim.notify(("Buffer autoformatting %s"):format(bool2str(vim.b[0].autoformat)))
+        end
+      '';
+      options.desc = "Toggle autoformatting (buffer)";
+    }
+    # {
+    #   mode = "n";
+    #   key = "<leader>u?";
+    #   action = ''
+    #     https://github.com/AstroNvim/astrolsp/blob/9f1c8fb22223aaf7224710d677338114690ee8d6/lua/astrolsp/toggles.lua#L102
+    #   '';
+    #   options.desc = "Toggle signature help (buffer)";
+    # }
+  ];
 }
