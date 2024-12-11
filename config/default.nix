@@ -15,6 +15,9 @@
     ./ui.nix
   ];
 
+  # NOTE NixVim options search: https://nix-community.github.io/nixvim/search/
+  # NOTE NixVim plugins search: https://nix-community.github.io/nixvim/plugins/
+
   globals = {
     mapleader = " ";
     maplocalleader = " ";
@@ -22,6 +25,7 @@
 
   opts = {
     path = helpers.mkRaw "vim.o.path .. '**'";
+    shell = "/run/current-system/sw/bin/fish";
 
     spell = true;
     spelllang = "en";
@@ -35,6 +39,11 @@
     undofile = true;
   };
 
+  clipboard = {
+    register = "unnamedplus";
+    providers.wl-copy.enable = true;
+  };
+
   plugins = {
     comment = {
       enable = true;
@@ -46,87 +55,153 @@
     {
       mode = "n";
       key = "H";
-      action = "<cmd>BufferLineCyclePrev<cr>";
+      action = "<Cmd>BufferLineCyclePrev<CR>";
       options.desc = "Switch to prev buffer";
     }
     {
       mode = "n";
       key = "L";
-      action = "<cmd>BufferLineCycleNext<cr>";
+      action = "<Cmd>BufferLineCycleNext<CR>";
       options.desc = "Switch to left buffer";
     }
     {
       mode = "n";
       key = "x";
-      action = "<cmd>q<cr>";
+      action = "<C-w>c";
       options.desc = "Close current buffer";
     }
     {
       mode = "n";
       key = "|";
-      action = "<cmd>vsp<cr>";
+      action = "<Cmd>vsp<CR>";
       options.desc = "New vertical split";
     }
     {
       mode = "n";
       key = "_";
-      action = "<cmd>sp<cr>";
+      action = "<Cmd>sp<CR>";
       options.desc = "New horizontal split";
     }
     {
       mode = ["n" "i"];
-      action = "<cmd>Telescope registers<CR>";
-      key = "<c-p>";
+      action = "<Cmd>Telescope registers<CR>";
+      key = "<C-p>";
       options.desc = "Paste from register";
     }
     {
       mode = "n";
-      action = "<c-w>h";
-      key = "<c-h>";
-      options.desc = "left window";
+      action = "<C-w>h";
+      key = "<C-h>";
+      options.desc = "Focus left";
     }
     {
       mode = "n";
-      action = "<c-w>j";
-      key = "<c-j>";
-      options.desc = "down window";
+      action = "<C-w>j";
+      key = "<C-j>";
+      options.desc = "Focus down";
     }
     {
       mode = "n";
-      action = "<c-w>k";
-      key = "<c-k>";
-      options.desc = "up window";
+      action = "<C-w>k";
+      key = "<C-k>";
+      options.desc = "Focus up";
     }
     {
       mode = "n";
-      action = "<c-w>l";
-      key = "<c-l>";
-      options.desc = "right window";
+      action = "<C-w>l";
+      key = "<C-l>";
+      options.desc = "Focus right";
+    }
+    # TODO test
+    {
+      mode = "n";
+      action = "<Cmd>resize -2<CR>";
+      key = "<C-Up>";
+      options.desc = "Resize split up";
+    }
+    # TODO test
+    {
+      mode = "n";
+      action = "<Cmd>resize +2<CR>";
+      key = "<C-Down>";
+      options.desc = "Resize split down";
+    }
+    # TODO test
+    {
+      mode = "n";
+      action = "<Cmd>vertical resize -2<CR>";
+      key = "<C-Left>";
+      options.desc = "Resize split left";
+    }
+    # TODO test
+    {
+      mode = "n";
+      action = "<Cmd>vertical resize +2<CR>";
+      key = "<C-Right>";
+      options.desc = "Resize split right";
+    }
+    # TODO test
+    {
+      mode = "v";
+      action = ">gv";
+      key = "<Tab>";
+      options.desc = "Indent line";
+    }
+    # TODO test
+    {
+      mode = "v";
+      action = "<gv";
+      key = "<S-Tab>";
+      options.desc = "Unindent line";
     }
     # ------------- Leader --------------
     {
       mode = "n";
       key = "<leader>n";
-      action = "<cmd>vnew<cr><esc>";
-      options.desc = "New buffer";
+      action = "<Cmd>enew<CR>";
+      options.desc = "New file";
+    }
+    {
+      mode = "n";
+      key = "<leader>q";
+      action = "<Cmd>confirm q<CR>";
+      options.desc = "Quit window";
+    }
+    {
+      mode = "n";
+      key = "<leader>Q";
+      action = "<Cmd>confirm qall<CR>";
+      options.desc = "Quit nvim";
     }
     {
       mode = "n";
       key = "<leader>w";
-      action = "<cmd>w<cr><esc>";
-      options.desc = "Save buffer";
+      action = "<Cmd>write<CR>";
+      options.desc = "Write buffer";
     }
-    # TODO not working
+    # TODO test
     # ref: https://github.com/numtostr/comment.nvim/
-    # {
-    #   mode = "n";
-    #   key = "<leader>/";
-    #   action = "gcc";
-    #   options.desc = "Comment line";
-    # }
-  ];
-
+    {
+      mode = "n";
+      key = "<leader>/";
+      action = "gcc";
+      options = {
+        desc = "Toggle comment";
+        remap = true;
       };
+    }
+    # TODO test
+    # ref: https://github.com/numtostr/comment.nvim/
+    {
+      mode = "x";
+      key = "<leader>/";
+      action = "gc";
+      options = {
+        desc = "Toggle comment";
+        remap = true;
+      };
+    }
+  ];
 
   plugins = {
     treesitter = {
