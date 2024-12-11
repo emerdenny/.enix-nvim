@@ -8,6 +8,7 @@
     ./buffers.nix
     ./find.nix
     ./git.nix
+    ./lsp.nix
     ./quickfix.nix
     ./session.nix
     ./toggleterm.nix
@@ -42,16 +43,6 @@
 
   keymaps = [
     # ------------ Top Level ------------
-    {
-      mode = "n";
-      key = "K";
-      action = ''
-        function()
-          vim.lsp.buf.hover()
-        end
-      '';
-      options.desc = "Get docs under cursor";
-    }
     {
       mode = "n";
       key = "H";
@@ -135,52 +126,7 @@
     # }
   ];
 
-  # https://github.com/spector700/Akari/blob/cc04b507f02fb8b6f3998e83c33f74d608772db5/config/keymaps.nix#L244
-  extraConfigLua = ''
-  '';
-
-  diagnostics = {
-    virtual_text = {
-      prefix = "";
-      format = helpers.mkRaw ''
-        function(diagnostic)
-          local severity = diagnostic.severity
-          if severity == vim.diagnostic.severity.ERROR then
-            return string.format('󰅚' .. ' %s', diagnostic.message)
-          end
-          if severity == vim.diagnostic.severity.WARN then
-            return string.format('⚠' .. ' %s', diagnostic.message)
-          end
-          if severity == vim.diagnostic.severity.INFO then
-            return string.format('ⓘ' .. ' %s', diagnostic.message)
-          end
-          if severity == vim.diagnostic.severity.HINT then
-            return string.format('󰌶' .. ' %s', diagnostic.message)
-          end
-          return string.format('■' .. ' %s', diagnostic.message)
-        end
-      '';
-    };
-    signs = {
-      text = helpers.toRawKeys {
-        "vim.diagnostic.severity.ERROR" = "󰅚";
-        "vim.diagnostic.severity.WARN" = "⚠";
-        "vim.diagnostic.severity.INFO" = "ⓘ";
-        "vim.diagnostic.severity.HINT" = "󰌶";
       };
-    };
-    update_in_insert = false;
-    underline = true;
-    severity_sort = true;
-    float = {
-      focusable = false;
-      style = "minimal";
-      border = "rounded";
-      source = "if_many";
-      header = "";
-      prefix = "";
-    };
-  };
 
   plugins = {
     treesitter = {
@@ -200,78 +146,6 @@
       #     paths = "${pkgs.vimPlugins.friendly-snippets}";
       #   }
       # ];
-    };
-    lsp = {
-      enable = true;
-      servers = {
-        rust_analyzer = {
-          enable = true;
-          autostart = true;
-          installRustc = true;
-          installCargo = true;
-          installRustfmt = true;
-        };
-        marksman = {
-          enable = true;
-          autostart = true;
-        };
-      };
-    };
-    lspkind = {
-      enable = true;
-      cmp = {
-        menu = {
-          nvim_lsp = "[LSP]";
-          nvim_lua = "[api]";
-          path = "[path]";
-          luasnip = "[snip]";
-          buffer = "[buffer]";
-        };
-      };
-      symbolMap = {
-        Namespace = "󰌗";
-        Text = "󰊄";
-        Method = "󰆧";
-        Function = "󰡱";
-        Constructor = "";
-        Field = "󰜢";
-        Variable = "󰀫";
-        Class = "󰠱";
-        Interface = "";
-        Module = "󰕳";
-        Property = "";
-        Unit = "󰑭";
-        Value = "󰎠";
-        Enum = "";
-        Keyword = "󰌋";
-        Snippet = "";
-        Color = "󰏘";
-        File = "󰈚";
-        Reference = "󰈇";
-        Folder = "󰉋";
-        EnumMember = "";
-        Constant = "󰏿";
-        Struct = "󰙅";
-        Event = "";
-        Operator = "󰆕";
-        TypeParameter = "";
-        Table = "";
-        Object = "󰅩";
-        Tag = "";
-        Array = "[]";
-        Boolean = "";
-        Number = "";
-        Null = "󰟢";
-        String = "󰉿";
-        Calendar = "";
-        Watch = "󰥔";
-        Package = "";
-      };
-
-      extraOptions = {
-        maxwidth = 50;
-        ellipsis_char = "...";
-      };
     };
     cmp = {
       # influenced by https://github.com/nix-community/kickstart-nix.nvim/blob/main/nvim/plugin/completion.lua
