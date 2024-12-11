@@ -10,6 +10,7 @@
     ./git.nix
     ./quickfix.nix
     ./session.nix
+    ./toggleterm.nix
     ./ui.nix
   ];
 
