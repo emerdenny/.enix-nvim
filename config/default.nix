@@ -112,28 +112,24 @@
       key = "<C-l>";
       options.desc = "Focus right";
     }
-    # TODO test
     {
       mode = "n";
       action = "<Cmd>resize -2<CR>";
       key = "<C-Up>";
       options.desc = "Resize split up";
     }
-    # TODO test
     {
       mode = "n";
       action = "<Cmd>resize +2<CR>";
       key = "<C-Down>";
       options.desc = "Resize split down";
     }
-    # TODO test
     {
       mode = "n";
       action = "<Cmd>vertical resize -2<CR>";
       key = "<C-Left>";
       options.desc = "Resize split left";
     }
-    # TODO test
     {
       mode = "n";
       action = "<Cmd>vertical resize +2<CR>";
@@ -145,9 +141,11 @@
       mode = "v";
       action = ">gv";
       key = "<Tab>";
-      options.desc = "Indent line";
+      options = {
+        desc = "Indent line";
+        remap = true;
+      };
     }
-    # TODO test
     {
       mode = "v";
       action = "<gv";
@@ -179,8 +177,6 @@
       action = "<Cmd>write<CR>";
       options.desc = "Write buffer";
     }
-    # TODO test
-    # ref: https://github.com/numtostr/comment.nvim/
     {
       mode = "n";
       key = "<leader>/";
@@ -190,8 +186,6 @@
         remap = true;
       };
     }
-    # TODO test
-    # ref: https://github.com/numtostr/comment.nvim/
     {
       mode = "x";
       key = "<leader>/";
@@ -206,21 +200,6 @@
   plugins = {
     treesitter = {
       enable = true;
-    };
-    luasnip = {
-      enable = true;
-      settings = {
-        enable_autosnippets = true;
-        store_selection_keys = "<Tab>";
-      };
-      # TODO need to setup for `pkgs` import
-      # https://github.com/spector700/Akari/blob/cc04b507f02fb8b6f3998e83c33f74d608772db5/config/default.nix
-      # fromVscode = [
-      #   {
-      #     lazyLoad = true;
-      #     paths = "${pkgs.vimPlugins.friendly-snippets}";
-      #   }
-      # ];
     };
     cmp = {
       # influenced by https://github.com/nix-community/kickstart-nix.nvim/blob/main/nvim/plugin/completion.lua

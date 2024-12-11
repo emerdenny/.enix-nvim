@@ -1,11 +1,6 @@
 { helpers, ... }:
 {
   plugins = {
-    # TODO config format on save
-    # conform-nvim = {
-    #   enable = true;
-    #   settings = {}:
-    # };
     # TODO config
     # lsp-signature = {
     #   enable = true;
@@ -13,12 +8,6 @@
     # };
     # TODO config
     # lspsaga = {
-    #   enable = true;
-    #   settings = {}:
-    # };
-    # TODO config
-    # ref: https://www.reddit.com/r/neovim/comments/1dotg86/comment/lac60zc/
-    # lint = {
     #   enable = true;
     #   settings = {}:
     # };
@@ -47,9 +36,113 @@
           # TODO
           settings = {};
         };
+        pyright = {
+          enable = true;
+          autostart = true;
+          # TODO
+          settings = {};
+        };
+        nixd = {
+          enable = true;
+          autostart = true;
+        };
         marksman = {
           enable = true;
           autostart = true;
+        };
+      };
+    };
+    none-ls = {
+      enable = true;
+      settings = {
+        diagnostics_format = "[#{c}] #{m} #{s}";
+        fallback_severity.__raw = "vim.diagnostic.severity.ERROR";
+        log_level = "warn";
+        notify_format = "[null-ls] %s";
+        root_dir.__raw = "require('null-ls.utils').root_pattern('.null-ls-root', 'Makefile', '.git')";
+        temp_dir = "/tmp"; # NOTE can cause issues with some none-ls sources
+        update_in_insert = true; # NOTE can cause perf issues
+        on_attach = ''
+          function(client, bufnr)
+            if client.supports_method("textDocument/formatting") then
+              vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                group = "LspFormatting",
+                buffer = bufnr,
+                callback = function()
+                  vim.lsp.buf.format({
+                    filter = function(client)
+                      -- apply whatever logic you want (for now only using null-ls)
+                      return client.name == "null-ls"
+                    end,
+                    bufnr = bufnr,
+                    async = false,
+                  })
+                end
+              })
+            end
+          end
+        '';
+      };
+      sources = {
+        code_actions = {
+          gomodifytags.enable = true;
+          impl.enable = true;
+          statix.enable = true;
+        };
+        completion = {
+          luasnip = {
+            enable = true;
+            settings = {
+              enable_autosnippets = true;
+              store_selection_keys = "<Tab>";
+              # TODO friendly-snippets?
+              # github.com/spector700/Akari/blob/cc04b507f02fb8b6f3998e83c33f74d608772db5/config/default.nix
+            };
+          };
+        };
+        diagnostics = {
+          actionlint.enable = true;                                          # GitHub Actions
+          buf.enable = true;                                                 # Protobuf
+          checkmake.enable = true;                                           # Makefile
+          commitlint.enable = true;                                          # Git Commits
+          deadnix.enable = true;                                             # Nix dead code
+          djlint.enable = true;                                              # HTML Template
+          dotenv_linter.enable = true;                                       # .env
+          golangci_lint.enable = true; # add bug/security rules and revive, staticcheck?
+          hadolint.enable = true;                                            # Dockerfile
+          selene.enable = true;                                              # Lua
+          sqlfluff = {
+            enable = true;
+            settings = {
+              extra_args = [ "--dialect" "postgres" ];
+            };
+          };
+          statix.enable = true;                                              # Nix
+          tidy.enable = true;                                                # HTML
+          todo_comments.enable = true;
+          trivy.enable = true;                                               # Security
+        };
+        formatting = {
+          alejandra.enable = true;                                           # Nix
+          buf.enable = true;                                                 # Protobuf
+          djlint.enable = true;                                              # HTML Template
+          gofmt.enable = true;
+          goimports.enable = true;
+          prettierd.enable = true; # disable css re: stylelint               # JS, TS, CSS, HTML, etc.
+          # remark.enable = true; # depends on remark-cli
+          sqlfluff = {
+            enable = true;
+            settings = {
+              extra_args = [ "--dialect" "postgres" ];
+            };
+          };
+          stylelint.enable = true;                                           # CSS
+          stylua.enable = true;
+          tidy.enable = true;                                                # HTML
+        };
+        hover = {
+          printenv.enable = true;                                           # ENV_VAR
         };
       };
     };
@@ -108,6 +201,12 @@
         maxwidth = 50;
         ellipsis_char = "...";
       };
+    };
+  };
+
+  autoGroups = {
+    LspFormatting = {
+      clear = true;
     };
   };
 
