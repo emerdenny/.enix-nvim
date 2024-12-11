@@ -7,36 +7,48 @@
   };
 
   keymaps = [
+    # TODO test
     {
-      mode = ["n"];
-      key = "<leader>gh";
-      action = ''
-        function()
-          vim.cmd.DiffviewFileHistory(vim.api.nvim_buf_get_name(0))
-        end
-      '';
+      mode = "n";
+      key = "<leader>gb";
+      action = "<cmd>Telescope git_branches<CR>";
       options = {
-        desc = "diff file history";
+        desc = "Git Branches";
       };
     }
     {
-      mode = ["n"];
-      key = "<leader>gH";
-      action = ''
-        function()
-          vim.cmd.DiffviewFileHistory()
-        end
-      '';
-      options = {
-        desc = "diff git history";
-      };
-    }
-    {
-      mode = ["n"];
+      mode = "n";
       key = "<leader>gd";
       action = "<cmd>DiffviewOpen<CR>";
       options = {
-        desc = "diffview";
+        desc = "Diffview";
+      };
+    }
+    # TODO test
+    {
+      mode = "n";
+      key = "<leader>gh";
+      action = "<cmd>DiffviewFileHistory %<CR>";
+      options = {
+        desc = "Diff file history";
+      };
+    }
+    # TODO test
+    {
+      mode = "n";
+      key = "<leader>gH";
+      action = "<cmd>DiffviewFileHistory<CR>";
+      options = {
+        desc = "Diff git history";
+      };
+    }
+    # TODO test
+    {
+      mode = "n";
+      key = "<leader>gs";
+      action = "<cmd>Telescope git_status<CR>";
+      options = {
+        desc = "Git status";
       };
     }
   ];
